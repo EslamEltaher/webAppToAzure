@@ -12,7 +12,9 @@ namespace webAppToAzure.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly myDbContext context;
-        public List<City> Cities { get; set; }
+        public List<City> Cities { get; set; } = new List<City>();
+        [FromForm]
+        public string CityName { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, myDbContext context)
         {
@@ -23,6 +25,15 @@ namespace webAppToAzure.Pages
         public void OnGet()
         {
             Cities = context.Cities.ToList();
+        }
+
+        public IActionResult OnPost()
+        {
+            // CityName = string.IsNullOrEmpty(CityName) ? "Empty" : CityName + " submitted";
+            context.Cities.Add(new City() { Name = CityName });
+            context.SaveChanges();
+            
+            return RedirectToPage("index");
         }
     }
 }

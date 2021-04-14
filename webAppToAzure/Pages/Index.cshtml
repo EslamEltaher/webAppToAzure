@@ -6,9 +6,16 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome after Commit (CI/CD)</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>you can add city (CI/CD commit 2).</p>
 
     <table>
+
+    @if (!string.IsNullOrEmpty(Model.CityName))
+    {
+        <h1>
+            Added @Model.CityName
+        </h1>
+    }
 
     @foreach (var city in Model.Cities)
     {
@@ -17,5 +24,9 @@
           <td>@city.Name</td>
       </tr>  
     }
+        <form asp-page="index" method="post">
+            <input asp-for="@Model.CityName" type="text"/>
+            <input type="submit" value="Add City"/>
+        </form>
     </table>
 </div>
